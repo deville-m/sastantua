@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 00:54:03 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/08 23:10:25 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/09 00:50:56 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,18 @@ int		calculate_width(int stage)
 			2 * (stage + 3));
 }
 
-void	print_stage(int stage)
+int		what_to_print(int i, int j, int height, int width)
+{
+	if (j < height - 1 - i)
+		return (' ');
+	if (j == height - 1 - i)
+		return ('/');
+	if (j == width - height + i)
+		return ('\\');
+	return ('*');
+}
+
+void	print_stage(int stage, int height, int width)
 {
 	int i;
 	int j;
@@ -38,19 +49,13 @@ void	print_stage(int stage)
 
 	height = 3 + stage;
 	width = calculate_width(stage);
-	printf("largueur : %d\n", width);
 	i = 0;
 	while (i < height)
 	{
 		j = 0;
-		while (j < height - 1 - i)
+		while (j < width - height + 1 + i)
 		{
-			ft_putchar(' ');
-			j++;
-		}
-		while (j < width)
-		{
-			ft_putchar('*');
+			ft_putchar(what_to_print(i, j, height, width));
 			j++;
 		}
 		ft_putchar('\n');
@@ -61,11 +66,24 @@ void	print_stage(int stage)
 void	sastantua(int size)
 {
 	int i;
+	int j;
+	int k;
+	int dim[2];
 
 	i = 0;
 	while (i < size)
 	{
-		printf("etage : %d\n", i);
-		print_stage(i++);
+		dim[0] = 3 + i;
+		dim[1] = calculate_width(i);
+		j = 0;
+		while (j < dim[0])
+		{
+			k = 0;
+			while (k < dim[1])
+			{
+				ft_putchar(' ');
+			}
+		}
+		print_stage(i++, dim[0], dim[1]);
 	}
 }
