@@ -6,18 +6,28 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/07 22:46:58 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/08 01:51:31 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/08 21:51:03 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sastantua.h"
+#include <stdio.h>
 
-int main(int argc, const char *argv[])
+void	sastantua(int size);
+int		ft_atoi(const char *str);
+
+int		main(int argc, const char *argv[])
 {
-	if (!argc || argc > 1)
+	int param;
+
+	if (argc < 2 || argc > 2)
 	{
-		return (-1);
+		return (0);
 	}
-	sastantua(5);
-	return 0;
+	param = ft_atoi(argv[1]);
+	if (param <= 0)
+	{
+		return (0);
+	}
+	sastantua(param);
+	return (0);
 }
