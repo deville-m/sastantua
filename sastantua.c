@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 00:54:03 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/09 16:00:49 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/09 16:11:10 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ char	what_to_print(int i, int j, int *height_width, int pad)
 	return ('*');
 }
 
-char	door(int stage, int i, int j, int *height_width, int pad)
+char	door(int stage, int *pos, int *height_width, int pad)
 {
 	int center;
 	int size;
 
 	center = height_width[1] / 2;
 	size = (stage / 2);
-	if ((i == 2 + (height_width[0] - 2) / 2 &&
-		j == center + size - 1 && stage > 3))
+	if ((pos[0] == 2 + (height_width[0] - 2) / 2 &&
+		pos[1] == center + size - 1 && stage > 3))
 		return ('$');
-	if ((stage == 0 && i == 2 && j == 3 + pad) ||
-		(stage == 1 && i == 3 && j == 9 + pad) ||
-		(j >= center - size && j <= center + size &&
-		i > 1 + stage % 2 && stage > 1))
+	if ((stage == 0 && pos[0] == 2 && pos[1] == 3 + pad) ||
+		(stage == 1 && pos[0] == 3 && pos[1] == 9 + pad) ||
+		(pos[1] >= center - size && pos[1] <= center + size &&
+		pos[0] > 1 + stage % 2 && stage > 1))
 		return ('|');
-	return (what_to_print(i, j, height_width, pad));
+	return (what_to_print(pos[0], pos[1], height_width, pad));
 }
 
 void	print_stage(int stage, int size, int *height_width, int pad)
@@ -67,7 +67,7 @@ void	print_stage(int stage, int size, int *height_width, int pad)
 		while (pos[1] < height_width[1] - height_width[0] + 1 + pos[0] + pad)
 		{
 			if (stage == size)
-				ft_putchar(door(stage, pos[0], pos[1], height_width, pad));
+				ft_putchar(door(stage, pos, height_width, pad));
 			else
 				ft_putchar(what_to_print(pos[0], pos[1], height_width, pad));
 			pos[1]++;
