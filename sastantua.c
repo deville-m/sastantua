@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 00:54:03 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/09 13:46:55 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/09 14:48:05 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,41 @@ int		calculate_width(int stage)
 			2 * (stage + 3));
 }
 
-char	print_door(int stage, int *pos, int *height_width, int pad)
+char	print_door(int stage, int i, int j, int pad)
 {
 	int center;
-
-	center = calculate_width(stage) / 2;
-	if ((height_width[1] == 7 && pos[0] == 2 + pad && pos[1] == 3 + pad))
+	int size;
+	int height;
+	int width;
+	
+	height = stage + 3;
+	width = calculate_width(stage);
+	center = width / 2;
+	size = (stage / 2) + 1;
+	if ((stage == 0 && i == 2 + pad && j == 3 + pad) ||
+		(j >= center - size && j <= center + size))
 		return ('|');
-	return (center);
-}
-
-char	what_to_print(int stage, int *pos, int *height_width, int pad)
-{
-	char c_door;
-
-	c_door = print_door(stage, pos, height_width, pad);
-	if (c_door == '$' || c_door == '|')
-		return (c_door);
-	if (pos[1] < height_width[0] - 1 - pos[0] + pad)
+	if (j < height - 1 - i + pad)
 		return (' ');
-	if (pos[1] == height_width[0] - 1 - pos[0] + pad)
+	if (j == height - 1 - i + pad)
 		return ('/');
-	if (pos[1] == height_width[1] - height_width[0] + pos[0] + pad)
+	if (j == width - height + i + pad)
 		return ('\\');
 	return ('*');
 }
 
-void	print_stage(int stage, int *height_width, int pad)
+char	what_to_print(int i, int j, int *height_width, int pad)
+{
+	if (j < height_width[0] - 1 - i + pad)
+		return (' ');
+	if (j == height_width[0] - 1 - i + pad)
+		return ('/');
+	if (j == height_width[1] - height_width[0] + i + pad)
+		return ('\\');
+	return ('*');
+}
+
+void	print_stage(int stage, int size, int *height_width, int pad)
 {
 	int pos[2];
 
@@ -63,7 +71,10 @@ void	print_stage(int stage, int *height_width, int pad)
 		pos[1] = 0;
 		while (pos[1] < height_width[1] - height_width[0] + 1 + pos[0] + pad)
 		{
-			ft_putchar(what_to_print(stage, pos, height_width, pad));
+			if (stage == size)
+				ft_putchar(print_door(stage, pos[0], pos[1], pad));
+			else
+				ft_putchar(what_to_print(pos[0], pos[1], height_width, pad));
 			pos[1]++;
 		}
 		ft_putchar('\n');
@@ -81,7 +92,7 @@ void	sastantua(int size)
 	{
 		dim[0] = 3 + i;
 		dim[1] = calculate_width(i);
-		print_stage(i, dim,
+		print_stage(i, size - 1, dim,
 					(calculate_width(size - 1) - calculate_width(i)) / 2);
 		i++;
 	}
