@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 00:54:03 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/09 02:07:15 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/09 02:12:01 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ int		what_to_print(int i, int j, int height, int width)
 	return ('*');
 }
 
-void	print_stage(int height, int width)
+void	print_stage(int *height_width)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (i < height)
+	while (i < height_width[0])
 	{
 		j = 0;
-		while (j < width - height + 1 + i)
+		while (j < height_width[1] - height_width[0] + 1 + i)
 		{
-			ft_putchar(what_to_print(i, j, height, width));
+			ft_putchar(what_to_print(i, j, height_width[0], height_width[1]));
 			j++;
 		}
 		ft_putchar('\n');
@@ -69,7 +69,7 @@ void	sastantua(int size)
 	{
 		dim[0] = 3 + i;
 		dim[1] = calculate_width(i);
-		print_stage(dim[0], dim[1]);
+		print_stage(dim);
 		i++;
 	}
 }
