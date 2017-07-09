@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 00:54:03 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/09 15:02:12 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/09 16:00:49 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,15 @@ char	door(int stage, int i, int j, int *height_width, int pad)
 
 	center = height_width[1] / 2;
 	size = (stage / 2);
-	if ((stage == 0 && i == 2 + pad && j == 3 + pad) ||
-		(j >= center - size && j <= center + size))
+	if ((i == 2 + (height_width[0] - 2) / 2 &&
+		j == center + size - 1 && stage > 3))
+		return ('$');
+	if ((stage == 0 && i == 2 && j == 3 + pad) ||
+		(stage == 1 && i == 3 && j == 9 + pad) ||
+		(j >= center - size && j <= center + size &&
+		i > 1 + stage % 2 && stage > 1))
 		return ('|');
-	return what_to_print(i, j, height_width, pad);
+	return (what_to_print(i, j, height_width, pad));
 }
 
 void	print_stage(int stage, int size, int *height_width, int pad)
