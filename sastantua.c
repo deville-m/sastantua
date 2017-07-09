@@ -6,7 +6,7 @@
 /*   By: mdeville <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 00:54:03 by mdeville          #+#    #+#             */
-/*   Updated: 2017/07/09 02:12:01 by mdeville         ###   ########.fr       */
+/*   Updated: 2017/07/09 02:14:33 by mdeville         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int		calculate_width(int stage)
 			2 * (stage + 3));
 }
 
-int		what_to_print(int i, int j, int height, int width)
+int		what_to_print(int i, int j, int *height_width)
 {
-	if (j < height - 1 - i)
+	if (j < height_width[0] - 1 - i)
 		return (' ');
-	if (j == height - 1 - i)
+	if (j == height_width[0] - 1 - i)
 		return ('/');
-	if (j == width - height + i)
+	if (j == height_width[1] - height_width[0] + i)
 		return ('\\');
 	return ('*');
 }
@@ -51,7 +51,7 @@ void	print_stage(int *height_width)
 		j = 0;
 		while (j < height_width[1] - height_width[0] + 1 + i)
 		{
-			ft_putchar(what_to_print(i, j, height_width[0], height_width[1]));
+			ft_putchar(what_to_print(i, j, height_width));
 			j++;
 		}
 		ft_putchar('\n');
